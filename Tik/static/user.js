@@ -1,13 +1,29 @@
 const sound = new Audio('static/click.mp3')
-const player = 'O'
+const player = 'X'
+
+const user = document.getElementById('username').innerText;
+let opponent;
+
+if (user == 'Nanda'){
+    opponent = 'Ratna'}
+else{
+    opponent = 'Nanda'};
+
+console.log('user -',user)
+console.log('opponent -',opponent)
+
+
 
 function btn(val){
     sound.play()
-    document.getElementById(`btn${val}`).innerText = 'X'
+
+    document.getElementById(`btn${val}`).innerText = 'O'
 
     data = {'button' : `btn${val}`}
+    console.log(data)
 
-    fetch(`${window.origin}/getter`,{
+
+    fetch(`${window.origin}/${user}/post`,{
         method : 'POST',
         cache : 'no-cache',
         body : JSON.stringify(data),
@@ -18,14 +34,17 @@ function btn(val){
     })
 }
 
-var rec = setInterval(recu, 2000)
+var rec = setInterval(recu, 7000)
 
 function recu(){
-    fetch(`${window.origin}/post`)
+    console.log('op', opponent)
+    fetch(`${window.origin}/${opponent}/get`)
     .then(response => response.json())
     .then( data => {
-    console.log(data['data'])
+            console.log(data['data']);
             document.getElementById(data["data"]['button']).innerText = player
 
     })
 }
+
+

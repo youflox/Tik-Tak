@@ -1,15 +1,13 @@
 const sound = new Audio('static/click.mp3')
-const player = 'X'
-
+const player = 'O'
 
 function btn(val){
     sound.play()
-
-    document.getElementById(`btn${val}`).innerText = 'O'
+    document.getElementById(`btn${val}`).innerText = 'X'
 
     data = {'button' : `btn${val}`}
 
-    fetch(`${window.origin}/post`,{
+    fetch(`${window.origin}/${opponent}/get`,{
         method : 'POST',
         cache : 'no-cache',
         body : JSON.stringify(data),
@@ -23,13 +21,11 @@ function btn(val){
 var rec = setInterval(recu, 2000)
 
 function recu(){
-    fetch(`${window.origin}/getter`)
+    fetch(`${window.origin}/${user}/post`)
     .then(response => response.json())
     .then( data => {
-            console.log(data['data']);
+    console.log(data['data'])
             document.getElementById(data["data"]['button']).innerText = player
 
     })
 }
-
-
